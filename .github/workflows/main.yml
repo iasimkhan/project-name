@@ -19,7 +19,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'  # Ensure this matches your Laravel PHP version
+          php-version: '8.2'  # Ensure this matches your Laravel PHP version
           extensions: mbstring, bcmath, xml, intl, json, pdo, tokenizer, curl, fileinfo
 
       # Step 3: Install Composer dependencies
