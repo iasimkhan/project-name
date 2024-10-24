@@ -1,16 +1,53 @@
-name: Deploy to Server
+name: Deploy Laravel Application
+
 on:
   push:
     branches:
-      - main
+      - main  # Trigger deployment on push to the main branch
+
 jobs:
   deploy:
+    name: Deploy Application
     runs-on: ubuntu-latest
+
     steps:
-      - name: Deploy to FTP Server
-        uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      # Step 1: Checkout the latest code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          php-version: '8.1'  # Ensure this matches your Laravel PHP version
+          extensions: mbstring, bcmath, xml, intl, json, pdo, tokenizer, curl, fileinfo
+
+      # Step 3: Install Composer dependencies
+      - name: Install Dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+     
+
+      # Step 5: Upload project to web host via FTP
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./  # Directory of the Laravel project
+          server-dir: /path/to/public_html/projects/html.growbiz365.com  # Path to your server's root directory
+
+      # Step 6: Set Permissions (optional)
+      - name: Set Permissions for Laravel Folders
+        run: |
+          chmod -R 775 storage
+          chmod -R 775 bootstrap/cache
+        shell: ssh
+
+      # Step 7: Cache Config (optional for optimization)
+      - name: Optimize Laravel Configuration
+        run: |
+          php artisan config:cache
+          php artisan route:cache
