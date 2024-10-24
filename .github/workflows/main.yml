@@ -33,9 +33,9 @@ jobs:
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          ftp-server: ftp.peshawarschool.com
+          ftp-username: smiqbal@html.growbiz365.com
+          ftp-password: c*%m]?yW(GNh
           local-dir: ./  # Directory of the Laravel project
           server-dir: /path/to/public_html/projects/html.growbiz365.com  # Path to your server's root directory
 
