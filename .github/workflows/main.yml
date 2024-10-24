@@ -27,16 +27,14 @@ jobs:
         run: |
           composer install --no-dev --optimize-autoloader
 
-     
-
       # Step 5: Upload project to web host via FTP
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          ftp-server: ftp.peshawarschool.com
-          ftp-username: smiqbal@html.growbiz365.com
-          ftp-password: c*%m]?yW(GNh
-          local-dir: ./  # Directory of the Laravel project
+          server: ftp.peshawarschool.com      # Correct input name
+          username: smiqbal@html.growbiz365.com # Correct input name
+          password: c*%m]?yW(GNh              # Correct input name
+          local-dir: ./                       # Directory of the Laravel project
           server-dir: /path/to/public_html/projects/html.growbiz365.com  # Path to your server's root directory
 
       # Step 6: Set Permissions (optional)
